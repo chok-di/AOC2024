@@ -13,6 +13,7 @@ x,y = int,int
 rows = len(map)
 cols = len(map[1])
 
+# find initial position of the patrol
 for r in range(rows):
     for c in range(cols):
         if map[r][c] in [">","v","<","^"]:
@@ -21,6 +22,7 @@ for r in range(rows):
             break
 
 # used for part1
+# similate the movement of patrol until it goes out of bound
 def run(x,y,patrol,count):
     map[x][y] = "X"
     while ((x in range(rows)) and (y in range(cols))):
@@ -38,6 +40,7 @@ def run(x,y,patrol,count):
             continue
 
 # used for part2
+# cache the location and direction at each moment. The patrol is stuck if it returns to the same position heading the same direction
 def check_stuck(x,y,patrol):
     visited = set()
     while True:
@@ -62,7 +65,7 @@ res1 = run(x,y,patrol,1)
 res2 = 0
 for r in range(rows):
     for c in range(cols):
-        if (r,c) != (x,y) and map[r][c] != "#":
+        if map[r][c] == "X":
             map[r][c] = "#"
             if check_stuck(x,y,patrol):
                 res2 += 1
